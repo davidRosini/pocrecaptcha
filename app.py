@@ -35,6 +35,18 @@ def login():
 
 @app.route('/validate_captcha', methods=('POST',))
 def validate_captcha():
-    response_captcha = request.form['responseCaptcha']
-    return 'Hello! ' + response_captcha
+    recaptcha_response = request.form['g-recaptcha-response']
 
+    body = {
+        'secret': '6LfqYJoUAAAAAPSdj_baC4iRJEcttVfpYnyJpNyB',
+        'response': recaptcha_response
+    }
+
+    response = requests.post('https://www.google.com/recaptcha/api/siteverify', data=body)
+
+    json_resp = response.json()
+
+    if not json_resp['success']:
+        abort(400)
+
+    return render_template('sucess.html')
