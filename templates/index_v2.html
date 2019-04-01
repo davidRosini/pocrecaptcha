@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>POC reCAPTCHA v2</title>
+        <style>
+            .flex-container {
+                height: 500px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            .login {
+                margin: 5px;
+                padding: 5px;
+                border: thin solid gray;
+                border-radius: 5px;
+                box-shadow: 3px 3px;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+            }
+            .recaptcha{
+                margin: 5px;
+                padding: 5px;
+                border: thin solid gray;
+                border-radius: 5px;
+                box-shadow: 3px 3px;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="login-form" action="/login" method="post">
+            <div class="flex-container">
+                <h1>POC reCAPTCHA v2</h1>
+                <div class="login">
+                    <label for="username"><strong>Login</strong></label>
+                    <input id="username" name="username" type="text">
+                    <label for="password"><strong>Password</strong></label>
+                    <input id="password" name="password" type="password">
+                    <br>
+                    <input type="submit" value="Submit" form="login-form">
+                </div>
+                <div class="recaptcha">
+                    <div class="g-recaptcha"
+                         data-sitekey="6LfqYJoUAAAAAHPtgEhvyaEjQb_MT7Ms5Lq43956"
+                         data-theme="dark"
+                         data-callback="onCallback">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+        <script type="text/javascript">
+            var onloadCallback = function() {
+                console.log('reCAPTCHA ready!');
+            };
+            var onCallback = function(gRecaptchaResponse) {
+                console.log(gRecaptchaResponse);
+                /*
+                var http = new XMLHttpRequest();
+                var url = '/validate_captcha_v2';
+                var params = 'g-recaptcha-response=' + gRecaptchaResponse;
+
+                http.open('POST', url, true);
+                http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                http.onreadystatechange = function() {
+                    if(http.readyState == 4 && http.status == 200) {
+                        console.log(http.responseText);
+                    }
+                }
+                http.send(params);
+                */
+            };
+        </script>
+    </body>
+</html>
