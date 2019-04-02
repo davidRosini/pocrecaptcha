@@ -43,41 +43,48 @@
 
             grecaptcha.ready(function() {
                 console.log('reCAPTCHA v3 ready');
-                grecaptcha.execute('6LdKbpsUAAAAAN33v1DD5wmcijAqxCbS5GQwdptu', {action: 'login'}).then(function(token) {
-                    console.log('Token on ready');
-                    console.log(token);
-                    document.getElementById('g-recaptcha-response').value = token;
-                });
+                executeCaptcha(null);
             });
 
-            let form = document.forms.item(0);
-
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
+            function executeCaptcha(callback) {
                 grecaptcha.execute('6LdKbpsUAAAAAN33v1DD5wmcijAqxCbS5GQwdptu', {action: 'login'}).then(function(token) {
-                    console.log('Token on submit');
                     console.log(token);
                     document.getElementById('g-recaptcha-response').value = token;
-                    form.submit();
-                });
-            });
 
-            function validateTokenV3(token) {
-                console.log(token);
-                /*
-                var http = new XMLHttpRequest();
-                var url = '/validate_captcha_v3';
-                var params = 'g-recaptcha-response=' + token;
+                    if (callback){
+                        callback();
+                    }
+                });
+            }
+
+            function validateCaptchaOnSubmit() {
+
+                let form = document.forms.item(0);
+
+                form.addEventListener('submit', function (e) {
+
+                    e.preventDefault();
+
+                    executeCaptcha(form.submit);
+                });
+            }
+
+            function validateCaptchaV3(token){
+
+                let http = new XMLHttpRequest();
+                let url = '/validate_captcha_v3';
+                let params = 'g-recaptcha-response=' + token;
 
                 http.open('POST', url, true);
                 http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
                 http.onreadystatechange = function() {
-                    if(http.readyState == 4 && http.status == 200) {
+                    if(http.readyState === 4 && http.status === 200) {
                         console.log(http.responseText);
                     }
-                }
+                };
+
                 http.send(params);
-                */
             }
         </script>
     </body>

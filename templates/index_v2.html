@@ -53,26 +53,32 @@
         </form>
         <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
         <script type="text/javascript">
-            var onloadCallback = function() {
+
+            const onloadCallback = function() {
                 console.log('reCAPTCHA ready!');
             };
-            var onCallback = function(gRecaptchaResponse) {
-                console.log(gRecaptchaResponse);
-                /*
-                var http = new XMLHttpRequest();
-                var url = '/validate_captcha_v2';
-                var params = 'g-recaptcha-response=' + gRecaptchaResponse;
+
+            const onCallback = function(gRecaptchaResponse) {
+                //validateCaptchaV2(gRecaptchaResponse);
+            };
+
+            function validateCaptchaV2(token){
+
+                let http = new XMLHttpRequest();
+                let url = '/validate_captcha_v2';
+                let params = 'g-recaptcha-response=' + token;
 
                 http.open('POST', url, true);
                 http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
                 http.onreadystatechange = function() {
-                    if(http.readyState == 4 && http.status == 200) {
+                    if(http.readyState === 4 && http.status === 200) {
                         console.log(http.responseText);
                     }
-                }
+                };
+
                 http.send(params);
-                */
-            };
+            }
         </script>
     </body>
 </html>
