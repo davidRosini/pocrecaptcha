@@ -1,6 +1,6 @@
 # pocrecaptcha
   
-  POC implementation of reCAPTCHA v2 with python and flask
+  POC implementation of reCAPTCHA v2 and v3 with python and flask
 
 # Run
 
