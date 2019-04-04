@@ -43,7 +43,7 @@
 
             grecaptcha.ready(function() {
                 console.log('reCAPTCHA v3 ready');
-                executeCaptcha(null);
+                executeCaptcha(validateCaptchaV3);
             });
 
             function executeCaptcha(callback) {
@@ -52,7 +52,7 @@
                     document.getElementById('g-recaptcha-response').value = token;
 
                     if (callback){
-                        callback();
+                        callback(token);
                     }
                 });
             }
@@ -80,7 +80,12 @@
 
                 http.onreadystatechange = function() {
                     if(http.readyState === 4 && http.status === 200) {
-                        console.log(http.responseText);
+
+                        if (http.responseText === 'true') {
+                            alert("You are not a bot!");
+                        } else {
+                            alert("You are a bot!");
+                        }
                     }
                 };
 

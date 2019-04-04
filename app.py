@@ -90,9 +90,9 @@ def validate_captcha_v2():
         abort(400)
 
     if not json_resp['success']:
-        return render_template('failure.html')
+        return 'false'
 
-    return render_template('success.html')
+    return 'true'
 
 
 @app.route('/validate_captcha_v3', methods=('POST',))
@@ -112,6 +112,6 @@ def validate_captcha_v3():
         abort(400)
 
     if json_resp['score'] < 0.5:
-        return render_template('failure.html')
+        return 'false'
 
-    return render_template('success.html')
+    return 'true'
